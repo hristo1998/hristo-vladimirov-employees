@@ -34,8 +34,7 @@ namespace EmployeesCollaboration.Web.Controllers
                 var result = employeeService.ProcessCsv(file);
                 var resultModel = new CollaborationResultViewModel
                 {
-                    PerProject = result.perProject,
-                    Totals = result.totals,
+                    Pairs = result.pairs,
                     BestPair = result.bestPair,
                 };
 

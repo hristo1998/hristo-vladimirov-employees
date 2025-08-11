@@ -30,8 +30,7 @@ namespace EmployeesCollaboration.Web.Controllers
 
             return Ok(new
             {
-                pairsPerProject = result.perProject,
-                totals = result.totals,
+                pairs = result.pairs,
                 bestPair = result.bestPair
             });
         }

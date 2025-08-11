@@ -9,7 +9,7 @@ namespace EmployeesCollaboration.Core.Services
 {
     public class EmployeeService : IEmployeeService
     {
-        public (List<PairWorkResult> perProject, List<PairTotalResult> totals, PairTotalResult bestPair)
+        public (List<PairWorkResult> pairs , PairWorkResult bestPair)
         ProcessCsv(IFormFile file)
         {
             using var reader = new StreamReader(file.OpenReadStream());
@@ -41,11 +41,10 @@ namespace EmployeesCollaboration.Core.Services
             return CalculatePairs(records);
         }
 
-        private (List<PairWorkResult> perProject, List<PairTotalResult> totals, PairTotalResult bestPair)
+        private (List<PairWorkResult> pairs, PairWorkResult bestPair)
             CalculatePairs(List<EmployeeProject> records)
         {
-            var perProject = new List<PairWorkResult>();
-            var totalsDict = new Dictionary<(int, int), int>();
+            var pairs = new List<PairWorkResult>();
 
             foreach (var group in records.GroupBy(r => r.ProjectId))
             {
@@ -63,37 +62,26 @@ namespace EmployeesCollaboration.Core.Services
                         if (overlapStart <= overlapEnd)
                         {
                             var days = (overlapEnd - overlapStart).Days + 1;
-                            perProject.Add(new PairWorkResult
+                            pairs.Add(new PairWorkResult
                             {
                                 EmpId1 = Math.Min(e1.EmpId, e2.EmpId),
                                 EmpId2 = Math.Max(e1.EmpId, e2.EmpId),
                                 ProjectId = e1.ProjectId,
                                 DaysWorked = days
                             });
-
-                            var key = (Math.Min(e1.EmpId, e2.EmpId), Math.Max(e1.EmpId, e2.EmpId));
-                            if (!totalsDict.ContainsKey(key))
-                                totalsDict[key] = 0;
-
-                            totalsDict[key] += days;
+                           
                         }
                     }
                 }
             }
 
-            var totals = totalsDict
-                .Select(kv => new PairTotalResult
-                {
-                    EmpId1 = kv.Key.Item1,
-                    EmpId2 = kv.Key.Item2,
-                    TotalDays = kv.Value
-                })
-                .OrderByDescending(t => t.TotalDays)
+            var totals = pairs
+                .OrderByDescending(t => t.DaysWorked)
                 .ToList();
 
             var bestPair = totals.FirstOrDefault();
 
-            return (perProject, totals, bestPair!);
+            return (pairs, bestPair!);
         }
     }
 }
