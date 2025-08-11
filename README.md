@@ -22,9 +22,10 @@ http://localhost:5000
 ## CSV Format
 The CSV file must contain the following columns:
 
-EmpId	ProjectId	DateFrom	DateTo
-1	10	2020-01-01	2020-01-15
-2	10	2020-01-05	2020-01-20
+| EmpId | ProjectId | DateFrom |  DateTo  |
+|-------|-----------|----------|----------|
+|   1	|    10     |2020-01-01|2020-01-15|
+|   2   |    10     |2020-01-05|2020-01-20|
 
 - DateTo can be NULL for ongoing projects (will be replaced with DateTime.Now).
 
