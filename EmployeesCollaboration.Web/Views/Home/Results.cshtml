@@ -1,0 +1,45 @@
+﻿@model EmployeesCollaboration.Web.ViewModels.CollaborationResultViewModel
+
+<h2>Results</h2>
+
+@if ((Model.Pairs != null && Model.Pairs.Any())
+     && Model.BestPair != null)
+{
+    <h3>Best Pair</h3>
+    <p>
+        Employee @Model.BestPair.EmpId1 and Employee @Model.BestPair.EmpId2 worked together 
+        for @Model.BestPair.DaysWorked days in total on @Model.BestPair.ProjectId project.
+    </p>
+
+    <button onclick="location.href='@Url.Action("Index", "Home")'" class="btn btn-primary">New Upload</button>
+
+    <h3>Totals</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Emp #1</th>
+                <th>Emp #2</th>
+                <th>Project</th>
+                <th>Total Days</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var row in Model.Pairs)
+        {
+            <tr>
+                <td>@row.EmpId1</td>
+                <td>@row.EmpId2</td>
+                <td>@row.ProjectId</td>
+                <td>@row.DaysWorked</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-warning" role="alert">
+        No overlapping pairs found.
+    </div>
+    <button onclick="location.href='@Url.Action("Index", "Home")'" class="btn btn-primary">New Upload</button>
+}

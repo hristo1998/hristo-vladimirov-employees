@@ -1,0 +1,22 @@
+Test CSV 0 — All Valid Data
+Employee 103 and Employee 104 worked together for 170 days in total.
+
+Test CSV 1 — All Valid Data
+No overlapping pairs found.
+
+Test CSV 2 — Invalid EmpID and ProjectID
+Line 1: Invalid EmpID 'abc'. Must be a positive integer.
+Line 2: Invalid ProjectID 'xyz'. Must be a positive integer.
+
+Test CSV 3 — Invalid Date Formats
+Line 2: Invalid DateTo '2012-13-01' (invalid month)
+
+Test CSV 4 — DateFrom after DateTo and DateFrom in Future
+Line 1: DateFrom '2015-01-01' is after DateTo '2014-01-05'
+Line 2: DateFrom '3000-01-01' cannot be in the future
+
+Test CSV 5 — Wrong number of columns and empty lines
+Line 1: Expected 4 columns but found 3
+Line 2: Invalid EmpID ''. Must be a positive integer.
+
+Test CSV 6 — Empty Document
