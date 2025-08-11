@@ -1,3 +1,5 @@
+using EmployeesCollaboration.Web.Extensions;
+
 namespace EmployeesCollaboration.Web
 {
     public class Program
@@ -5,6 +7,10 @@ namespace EmployeesCollaboration.Web
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // Add services to DI
+            builder.Services.AddControllersWithViews();
+            builder.Services.AddApplicationServices();
 
             // Add services to the container.
             builder.Services.AddRazorPages();
@@ -27,6 +33,10 @@ namespace EmployeesCollaboration.Web
             app.UseAuthorization();
 
             app.MapRazorPages();
+
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
         }
